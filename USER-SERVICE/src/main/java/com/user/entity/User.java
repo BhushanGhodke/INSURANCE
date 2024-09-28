@@ -24,7 +24,7 @@ public class User {
 	
 	@CreationTimestamp
 	private LocalDate createdDate;
-
+	
 	
 
 	public Integer getId() {

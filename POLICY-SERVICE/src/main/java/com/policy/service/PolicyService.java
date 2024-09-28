@@ -20,4 +20,6 @@ public interface PolicyService {
 	public PolicyRequest getPolicyUserId(Integer userId);
 
 	public List<PolicyInfoResponse> getAllPolicies(Integer userId);
+
+	public String DeletePolicyById(Integer policyId);
 }

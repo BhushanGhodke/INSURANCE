@@ -82,6 +82,8 @@ public class UserServiceImpl implements UserService {
 
 				response.setId(user.getId());
 				response.setStatus(status);
+				response.setFirstname(user.getFirstname());
+				response.setLastname(user.getLastname());
 				return response;
 
 			} else {

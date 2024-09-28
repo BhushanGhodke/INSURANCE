@@ -1,7 +1,5 @@
 package com.policy.binding;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDate;
 
 public class PolicyInfoResponse {
@@ -28,6 +26,7 @@ public class PolicyInfoResponse {
     private Integer userId;
 
     private String planType;
+    
 
     public Integer getPolicyId() {
         return policyId;

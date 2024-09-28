@@ -19,15 +19,13 @@ public class NotificationController {
 	private EmailService emailService;
 	
 	@PostMapping("/sendEmail")
-	public String sendEmail(@RequestBody Email email) {
+	public Boolean sendEmail(@RequestBody Email email) {
 		
 		Boolean status = emailService.sendEmail(email);
 	
-		if(status) {
-			return "SUCCESS";
-		}
-		else {
-			throw new EmailFailureExcpetion("FAILED");
-		}
+
+			return status;
+
+
 	}
 }

@@ -9,7 +9,7 @@ public class PolicyResponse {
 
 	private String paymentStatus;
 	
-	
+	private String message;
 	
 	
 	public Integer getPolicyId() {
@@ -36,7 +36,11 @@ public class PolicyResponse {
 		this.paymentStatus = paymentStatus;
 	}
 
-		
-	
-	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getMessage() {
+		return message;
+	}
 }

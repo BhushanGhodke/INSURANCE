@@ -10,5 +10,5 @@ import com.policy.binding.Email;
 public interface NotificationClient {
 
 	@PostMapping("/notification/sendEmail")
-	public String sendEmail(Email email);
+	public Boolean sendEmail(Email email);
 }

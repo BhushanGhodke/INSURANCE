@@ -21,7 +21,8 @@ public class PolicyRequest {
 	private String policyStatus;
 	
 	private Integer userId;
-	
+    private Integer planId;
+
 	public Integer getPolicyId() {
 		return policyId;
 	}
@@ -122,6 +123,11 @@ public class PolicyRequest {
 		this.policyStatus = policyStatus;
 	}
 
-	
-	
+	public Integer getPlanId() {
+		return planId;
+	}
+
+	public void setPlanId(Integer planId) {
+		this.planId = planId;
+	}
 }
