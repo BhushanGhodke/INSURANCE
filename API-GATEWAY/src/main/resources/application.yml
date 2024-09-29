@@ -1,5 +1,5 @@
 server:
-  port: 5555
+  port: 7070
 
 #
 #logging:
@@ -8,95 +8,67 @@ server:
   
 spring:
 
-#  config:
-#    import: optional:configserver:http://localhost:8888
-
   application:
     name: API-GATEWAY
     
   cloud:
     gateway:
-    
       globalcors:
         add-to-simple-url-handler-mapping: true
-
         corsConfigurations:
           '[/**]':
             allowedOrigins: "http://localhost:4200"
-            allowedHeaders: "*"
+            
             allowedMethods:
               - GET
               - POST
               - PUT
               - DELETE
               - PATCH
-    
-    
-    
-    
+       
       routes:
       - id: USER-SERVICE
         uri: lb://USER-SERVICE
         predicates:
         - Path=/user/**
         
-#        filters:
-#        - AuthenticationFilter
-#        
-#        
-#      - id: DC-SERVICE
-#        uri: lb://DC-SERVICE
-#        predicates:
-#        - Path=/DC/**
-#        filters:
-#        - AuthenticationFilter
-#       
-#        
-#      - id: ED-SERVICE
-#        uri: lb://ED-SERVICE
-#        predicates:
-#        - Path=/ED/**
-#        filters:
-#        - AuthenticationFilter
-#        
-#
-#      - id: CO-SERVICE
-#        uri: lb://CO-SERVICE
-#        predicates:
-#        - Path=/CO/**
-#        filters:
-#        - AuthenticationFilter
-#       
-#       
-#       
-#      - id: PLAN-SERVICE
-#        uri: lb://PLAN-SERVICE
-#        predicates:
-#        - Path=/PlanMaster/**
-#        filters:
-#        - AuthenticationFilter
-#        
-#
-#      - id: REPORT-SERVICE
-#        uri: lb://REPORT-SERVICE
-#        predicates:
-#        - Path=/report/**
-#        filters:
-#        - AuthenticationFilter
-#
-#            
-#      - id: BI-SERVICE
-#        uri: lb://BI-SERVICE
-#        predicates:
-#        - Path=/BI/**
-#        filters:
-#        - AuthenticationFilter
-#          
-# 
-#      - id: AUTH-SERVICE
-#        uri: lb://AUTH-SERVICE
-#        predicates:
-#        - Path=/auth/**
         
+        
+        
+      - id: POLICY-SERVICE
+        uri: lb://POLICY-SERVICE
+        predicates:
+        - Path=/policy/**
+       
+       
+        
+      - id: PAYMENT-SERVICE
+        uri: lb://PAYMENT-SERVICE
+        predicates:
+        - Path=/payment/**
+       
+        
+
+      - id: DOCUMENT-SERVICE
+        uri: lb://DOCUMENT-SERVICE
+        predicates:
+        - Path=/document/**
+        
+       
+       
+      - id: CLAIM-SERVICE
+        uri: lb://CLAIM-SERVICE
+        predicates:
+        - Path=/calim/**
+      
+        
+
+      - id: NOTIFICATION-SERVICE
+        uri: lb://NOTIFICATION-SERVICE
+        predicates:
+        - Path=/notification/**
+     
   main:
     web-application-type: reactive
+        
+
