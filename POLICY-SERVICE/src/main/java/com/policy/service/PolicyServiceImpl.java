@@ -93,6 +93,7 @@ public class PolicyServiceImpl implements PolicyService {
 		Policy policy = policyRepository.findById(policyId).orElseThrow();
 
 		System.out.println(status);
+	
 
 		if (status) {
 

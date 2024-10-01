@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +12,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="policy")
@@ -19,16 +26,41 @@ public class Policy {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer policyId;
+	
+	@NotEmpty(message = "firstname must not be null")
+	@Size(min = 4, message = "firstname atleast 4 charcter required")
 	private String firstname;
+
+	@NotEmpty(message = "lastname must not be null")
+	@Size(min = 4, message = "lastname atleast 4 charcter required")
 	private String lastname;
+	
+	@NotEmpty(message = "mobile must not be null")
+	@Size(min = 10,max=10, message = "mobile number 10 digit requied")
 	private String mobile;
+	
+	@NotEmpty(message = "please select gender")
 	private String gender;
+	
+	@NotEmpty(message = "please select coverage")
 	private String coverage;
+	
+	@NotNull(message =  "please select date of birth")
 	private LocalDate dob;
+	
+	@NotEmpty(message = "address must not be empty")
 	private String address;
+	
+	@Email(message = "please enter valid email id")
+	@NotEmpty(message = "email id must not be empty")
 	private String email;
+	
+    @Min(value = 100000, message = "pincode must be of 6 deigit only")
+    @Max(value =999999 , message = "pincode must be of 6 deigit only")
 	private Integer pinCode;
+	
 	private Integer premiumAmount;
+	
 	private String paymentStatus;
 	
 	@CreationTimestamp

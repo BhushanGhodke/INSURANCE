@@ -1,8 +1,12 @@
 package com.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +21,8 @@ import com.user.binding.LoginResponse;
 import com.user.binding.UserBinding;
 import com.user.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
@@ -26,8 +32,10 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping("/register")
-	public ResponseEntity<String> UserRegistration(@RequestBody UserBinding userBinding) {
+	public ResponseEntity<String> UserRegistration(@Valid @RequestBody UserBinding userBinding, BindingResult result) {
 
+		
+		
 		Boolean status = userService.userRegistration(userBinding);
 
 		if (status) {
@@ -39,7 +47,7 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> LoginUser(@RequestBody LoginRequest login) {
+	public ResponseEntity<LoginResponse> LoginUser(@Valid @RequestBody LoginRequest login) {
 
 		LoginResponse response = userService.UserLogin(login.getUsername(), login.getPassword());
 
@@ -48,7 +56,7 @@ public class UserController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<String> updateUser(@RequestBody UserBinding userBinding) {
+	public ResponseEntity<String> updateUser(@Valid @RequestBody UserBinding userBinding) {
 
 		Boolean status = userService.updateUser(userBinding);
 

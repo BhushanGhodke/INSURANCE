@@ -8,18 +8,39 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 @Entity
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotEmpty
+    @Size(min = 4, message = "Minimum 4 character required")
 	private String username;
+	
+	@NotEmpty
+	@Size(min=6, message = "minimum 6 character required")
 	private String password;
+	
+	@NotEmpty
+	@Email(message = "Invalid mail id")
 	private String email;
+	
+	@NotEmpty
+	@Size(min=10, max=10, message = "Mobile number must be 10 digit")
 	private String mobile;
 	
+	@NotEmpty
+	@Size(min = 4, message = "minimum 4 character requied")
 	private String firstname;
+	
+	@NotEmpty
+	@Size(min = 4, message = "minimum 4 character requied")
 	private String lastname;
 	
 	@CreationTimestamp

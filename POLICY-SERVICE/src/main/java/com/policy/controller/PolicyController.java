@@ -16,6 +16,8 @@ import com.policy.exception.PaymentFailedExcpetion;
 import com.policy.repo.PolicyTypeRepository;
 import com.policy.service.PolicyService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/policy")
 @CrossOrigin
@@ -28,7 +30,7 @@ public class PolicyController {
 	private PolicyTypeRepository policyTypeRepo;
 
 	@PostMapping("/createPolicy")
-	public ResponseEntity<PolicyResponse> createPolicy(@RequestBody PolicyRequest policyRequest) {
+	public ResponseEntity<PolicyResponse> createPolicy(@Valid @RequestBody PolicyRequest policyRequest) {
 
 		PolicyResponse response = policyService.createPolicy(policyRequest);
 
