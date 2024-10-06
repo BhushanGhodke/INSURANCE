@@ -1,17 +1,19 @@
 package com.policy.service;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.policy.binding.PolicyInfoResponse;
 import com.policy.binding.PolicyRequest;
 import com.policy.binding.PolicyResponse;
-import com.policy.entity.Policy;
-
-import java.util.List;
 
 public interface PolicyService {
 
 	public PolicyResponse createPolicy(PolicyRequest policyRequest);
+
 	
-	public Boolean createPaymentForFreshPolicy(Integer policyId);
 	
 	public PolicyInfoResponse FetchPolicyById(Integer policyId);
 	

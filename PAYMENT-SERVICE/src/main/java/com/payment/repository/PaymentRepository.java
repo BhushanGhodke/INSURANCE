@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 
-	public Payment findByPolicyId(Integer policyId);
+	public Payment findByRazorPayOrderId(String razorPayOrderId);
 	
 	
 }

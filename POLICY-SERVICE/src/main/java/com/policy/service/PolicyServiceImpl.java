@@ -1,26 +1,27 @@
 package com.policy.service;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.policy.binding.*;
-import com.policy.client.DocumentClient;
-import com.policy.entity.PolicyType;
-import com.policy.exception.PolicyExistsException;
-import com.policy.repo.PolicyTypeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailParseException;
 import org.springframework.stereotype.Service;
 
-import com.policy.client.NotificationClient;
+import com.policy.binding.PaymentResponse;
+import com.policy.binding.PolicyInfoForPayment;
+import com.policy.binding.PolicyInfoResponse;
+import com.policy.binding.PolicyRequest;
+import com.policy.binding.PolicyResponse;
 import com.policy.client.PaymentClient;
 import com.policy.entity.Policy;
-import com.policy.exception.PaymentDoneException;
+import com.policy.entity.PolicyType;
+import com.policy.exception.PolicyExistsException;
 import com.policy.exception.PolicyNotFoundException;
 import com.policy.repo.PolicyRepository;
+import com.policy.repo.PolicyTypeRepository;
 
 @Service
 public class PolicyServiceImpl implements PolicyService {
@@ -29,16 +30,10 @@ public class PolicyServiceImpl implements PolicyService {
 	private PolicyRepository policyRepository;
 
 	@Autowired
-	private NotificationClient notificationClient;
-
-	@Autowired
 	private PaymentClient paymentClient;
 
 	@Autowired
 	private PolicyTypeRepository policyTypeRepository;
-
-	@Autowired
-	private DocumentClient documentClient;
 
 	@Override
 
@@ -50,23 +45,33 @@ public class PolicyServiceImpl implements PolicyService {
 
 		if (policy == null) {
 
-			Integer userId = policyRequest.getUserId();
-
 			Policy newPolicy = new Policy();
 
-			policyRequest.setPolicyStatus("CREATE");
+			policyRequest.setPolicyStatus("DEACTIVE");
 
-			policyRequest.setPremiumAmount(2000);
+			policyRequest.setPremiumAmount(1);
 
 			policyRequest.setEndDate(LocalDate.now().plusYears(1));
 
-			policyRequest.setPaymentStatus("PENDING");
-
 			BeanUtils.copyProperties(policyRequest, newPolicy);
 
-			newPolicy.setUserId(userId);
+			newPolicy.setUserId(policyRequest.getUserId());
 
-			Policy save = policyRepository.save(newPolicy);
+			Policy savedPolicy = policyRepository.save(newPolicy);
+
+			PolicyInfoForPayment policyInfoForPayment = new PolicyInfoForPayment();
+
+			policyInfoForPayment.setEmail(savedPolicy.getEmail());
+
+			policyInfoForPayment.setPremiumAmount(savedPolicy.getPremiumAmount());
+
+			PaymentResponse paymentResponse = paymentClient.initiatePaymentForPolicy(policyInfoForPayment);
+
+			savedPolicy.setPaymentStatus(paymentResponse.getPaymentStatus());
+
+			savedPolicy.setPaymentId(paymentResponse.getPaymentId());
+			 
+			Policy save = policyRepository.save(savedPolicy);
 
 			PolicyResponse response = new PolicyResponse();
 
@@ -74,6 +79,16 @@ public class PolicyServiceImpl implements PolicyService {
 
 			response.setPolicyStatus(save.getPolicyStatus());
 
+			response.setRazorPayOrderId(paymentResponse.getRazorPayOrderId());
+			
+			response.setEmail(save.getEmail());
+			
+			response.setFirstname(save.getFirstname());
+			
+			response.setMobile(save.getMobile());
+			
+			response.setPremiumAmount(save.getPremiumAmount());
+			
 			response.setPaymentStatus(save.getPaymentStatus());
 
 			response.setMessage("Policy created successfully Please Make Payment Now");
@@ -85,59 +100,9 @@ public class PolicyServiceImpl implements PolicyService {
 
 	}
 
-	@Override
-	public Boolean createPaymentForFreshPolicy(Integer policyId) {
 
-		Boolean status = paymentClient.paymentStatusByPolicyId(policyId);
 
-		Policy policy = policyRepository.findById(policyId).orElseThrow();
-
-		System.out.println(status);
 	
-
-		if (status) {
-
-			PaymentResponse paymentResponse = paymentClient.DoPaymentForPolicy(policyId);
-
-			if (paymentResponse.getPaymentStatus().equals("SUCCESS")) {
-
-				System.out.println("Payment successful");
-
-				Email email = new Email();
-
-				email.setMsg("Payment successful and Document Creatd Successfully");
-
-				Boolean notify = notificationClient.sendEmail(email);
-
-				System.out.println("Notification Email Sent :: Payment Successful");
-
-				System.out.println(notify);
-
-			}
-
-			policy.setPaymentStatus(paymentResponse.getPaymentStatus());
-			policy.setPolicyStatus("ACTIVE");
-
-			policyRepository.save(policy);
-
-			return true;
-		}
-
-		else {
-
-			Email email = new Email();
-
-			email.setMsg("Payment failed and document not created");
-
-			Boolean emailStatus = notificationClient.sendEmail(email);
-
-			System.out.println("Payment Failed Email Sent Successfully");
-
-			return false;
-		}
-
-	}
-
 	@Override
 	public PolicyInfoResponse FetchPolicyById(Integer policyId) {
 
@@ -177,7 +142,7 @@ public class PolicyServiceImpl implements PolicyService {
 		list.forEach((policy) -> {
 
 			Integer planId = policy.getPlanId();
-
+			
 			String planName = policyTypeRepository.findByPlanId(planId).getPlans();
 
 			System.out.println(planName);
@@ -208,10 +173,12 @@ public class PolicyServiceImpl implements PolicyService {
 	@Override
 	public String DeletePolicyById(Integer policyId) {
 
+		Policy policy = policyRepository.findById(policyId).orElseThrow();
+
+		Boolean status = paymentClient.deletePaymentDetailsByPaymentId(policy.getPaymentId());
+
 		policyRepository.deleteById(policyId);
-		
-		Boolean status = paymentClient.deletePaymentDetailsByPolicyId(policyId);
-		
+
 		return "Policy Deleted";
 
 	}

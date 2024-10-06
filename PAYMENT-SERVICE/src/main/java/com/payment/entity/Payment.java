@@ -12,13 +12,21 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paymentId;
-    private String transactionId;
+    private String razorPayOrderId;
     private String paymentStatus;
+    private String razorpay_payment_id;
     @CreationTimestamp
     private Date paymentDate;
-    private Integer policyId;
+   
+    public String getRazorpay_payment_id() {
+		return razorpay_payment_id;
+	}
 
-    public Integer getPaymentId() {
+	public void setRazorpay_payment_id(String razorpay_payment_id) {
+		this.razorpay_payment_id = razorpay_payment_id;
+	}
+
+	public Integer getPaymentId() {
         return paymentId;
     }
 
@@ -42,19 +50,14 @@ public class Payment {
         this.paymentDate = paymentDate;
     }
 
-    public Integer getPolicyId() {
-        return policyId;
-    }
+  
+	public String getRazorPayOrderId() {
+		return razorPayOrderId;
+	}
 
-    public void setPolicyId(Integer policyId) {
-        this.policyId = policyId;
-    }
+	public void setRazorPayOrderId(String razorPayOrderId) {
+		this.razorPayOrderId = razorPayOrderId;
+	}
 
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
+   
 }

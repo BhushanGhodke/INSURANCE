@@ -70,6 +70,8 @@ public class Policy {
 	
 	private String policyStatus;
 	
+	private Integer paymentId;
+	
 	private Integer userId;
 	
 	private Integer planId;
@@ -80,9 +82,7 @@ public class Policy {
 	public void setPolicyId(Integer policyId) {
 		this.policyId = policyId;
 	}
-	
-	
-	
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -181,10 +181,12 @@ public class Policy {
 	public void setPlanId(Integer planId) {
 		this.planId = planId;
 	}
+	public Integer getPaymentId() {
+		return paymentId;
+	}
+	public void setPaymentId(Integer paymentId) {
+		this.paymentId = paymentId;
+	}
 	
-	
-	
-	
-
 
 }

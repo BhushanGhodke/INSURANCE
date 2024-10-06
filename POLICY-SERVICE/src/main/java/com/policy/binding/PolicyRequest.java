@@ -19,6 +19,7 @@ public class PolicyRequest {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String policyStatus;
+	private Integer paymentId;
 	
 	private Integer userId;
     private Integer planId;
@@ -130,4 +131,14 @@ public class PolicyRequest {
 	public void setPlanId(Integer planId) {
 		this.planId = planId;
 	}
+	public Integer getPaymentId() {
+		return paymentId;
+	}
+	public void setPaymentId(Integer paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	
+	
+	
 }

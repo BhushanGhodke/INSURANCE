@@ -4,13 +4,24 @@ import java.sql.Date;
 
 public class PaymentResponse {
 
-    private Integer paymentId;
-    private String transactionId;
-    private String paymentStatus;
-    private Date paymentDate;
-    private Integer policyId;
+	  private Integer paymentId;
+	    private String razorPayOrderId;
+	    private String paymentStatus;
+	    private Date paymentDate;
+	    private String razorpay_payment_id;
+	
 
-    public Integer getPaymentId() {
+	    
+	    
+    public String getRazorpay_payment_id() {
+			return razorpay_payment_id;
+		}
+
+		public void setRazorpay_payment_id(String razorpay_payment_id) {
+			this.razorpay_payment_id = razorpay_payment_id;
+		}
+
+	public Integer getPaymentId() {
         return paymentId;
     }
 
@@ -34,19 +45,15 @@ public class PaymentResponse {
         this.paymentDate = paymentDate;
     }
 
-    public Integer getPolicyId() {
-        return policyId;
-    }
+  
 
-    public void setPolicyId(Integer policyId) {
-        this.policyId = policyId;
-    }
+	public String getRazorPayOrderId() {
+		return razorPayOrderId;
+	}
 
-    public String getTransactionId() {
-        return transactionId;
-    }
+	public void setRazorPayOrderId(String razorPayOrderId) {
+		this.razorPayOrderId = razorPayOrderId;
+	}
 
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
+  
 }

@@ -2,17 +2,22 @@ package com.policy.controller;
 
 import java.util.List;
 
-import com.policy.binding.PolicyInfoResponse;
-import com.policy.entity.Policy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.policy.binding.PolicyInfoResponse;
 import com.policy.binding.PolicyRequest;
 import com.policy.binding.PolicyResponse;
 import com.policy.entity.PolicyType;
-import com.policy.exception.PaymentFailedExcpetion;
 import com.policy.repo.PolicyTypeRepository;
 import com.policy.service.PolicyService;
 
@@ -40,13 +45,14 @@ public class PolicyController {
 	@GetMapping("/payment/{policyId}")
 	public ResponseEntity<String> paymentForPolicy(@PathVariable Integer policyId) {
 
-		Boolean status = policyService.createPaymentForFreshPolicy(policyId);
+	//	Boolean status = policyService.createPaymentForFreshPolicy(policyId);
 
-		if (status) {
-			return new ResponseEntity<String>("Payment Done", HttpStatus.OK);
-		} else {
-			throw new PaymentFailedExcpetion("Payment Failed");
-		}
+//		if (status) {
+//			return new ResponseEntity<String>("Payment Done", HttpStatus.OK);
+//		} else {
+//			throw new PaymentFailedExcpetion("Payment Failed");
+//		}
+		return null;
 	}
 
 	@GetMapping("/policyTypes")

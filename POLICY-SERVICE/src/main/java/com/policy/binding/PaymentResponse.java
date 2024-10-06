@@ -4,11 +4,12 @@ import java.sql.Date;
 
 public class PaymentResponse {
 
-    private Integer paymentId;
-    private String transactionId;
-    private String paymentStatus;
-    private Date paymentDate;
-    private Integer policyId;
+	 private Integer paymentId;
+	    private String razorPayOrderId;
+	    private String paymentStatus;
+	
+	    private Date paymentDate;
+	    private Integer policyId;
 
     public Integer getPaymentId() {
         return paymentId;
@@ -42,11 +43,13 @@ public class PaymentResponse {
         this.policyId = policyId;
     }
 
-    public String getTransactionId() {
-        return transactionId;
-    }
+    public String getRazorPayOrderId() {
+		return razorPayOrderId;
+	}
 
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
+	public void setRazorPayOrderId(String razorPayOrderId) {
+		this.razorPayOrderId = razorPayOrderId;
+	}
+
+
 }
